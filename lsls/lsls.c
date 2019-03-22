@@ -17,6 +17,8 @@ int main(int argc, char **argv)
 
   // Parse command line
   
+  // if there is an argument, use that as path
+  // if not, use current directory as path
   if(argv[1]) path = argv[1] ;
   else path = ".";
 
@@ -33,15 +35,17 @@ int main(int argc, char **argv)
 
   // Repeatly read and print entries
   while(1){
-    
+    // read top item in the directory and move to next item
     open_dir_point = readdir(cur_dir);
     if(open_dir_point == NULL) break;
 
-    
+    // get current item's path + name
      strcpy(file_path, path);
     strcat(file_path, "/");
     strcat(file_path, open_dir_point->d_name);
     // printf("file_path = %s\n", file_path);
+    
+    // get size of current item
      stat(file_path, &buf);
 
      printf("  %lld  %s\n", buf.st_size, open_dir_point->d_name);
